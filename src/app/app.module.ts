@@ -26,7 +26,7 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
     ProductDetailComponent,
     ProductBriefComponent,
     OrderlistComponent,
-    OrderDetailComponent
+    OrderDetailComponent,
   ],
   imports: [
     BrowserModule,

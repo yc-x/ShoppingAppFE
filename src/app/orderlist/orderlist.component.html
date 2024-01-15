@@ -1,1 +1,20 @@
-<p>orderlist works!</p>
+
+<!-- <app-order-brief *ngFor="let order of orderList" [order]="order"></app-order-brief> -->
+<table>
+    <tr>
+        <th>datePlaced</th>
+        <th>Item Details</th>
+        <th>status</th>
+    </tr>
+    <tr *ngFor="let order of orderList">
+        <td>{{order.datePlaced}}</td>
+        <td>
+            <div *ngFor="let item of order.orderItemDetails">
+                <p>{{item.productName}}</p>
+                <p>{{item.quantity}}</p>
+                <p>{{item.purchasedPrice}}</p>
+            </div>
+        </td>
+        <td>{{order.status}}</td>
+    </tr>
+</table>
