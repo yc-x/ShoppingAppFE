@@ -1,0 +1,12 @@
+<form [formGroup]="signupformGroup" (ngSubmit)="onSubmit()">
+    <h1>Signup</h1>
+  
+    <input class="input" placeholder="Username" formControlName="username" />
+  
+    <input class="input" placeholder="Email" formControlName="email" />
+  
+    <input class="input" placeholder="Password" formControlName="password" />
+  
+    <button class="btn" type="submit" [disabled]="signupformGroup.invalid">Add</button>
+</form>
+<a href="" routerLink="/login">Go to login</a>
