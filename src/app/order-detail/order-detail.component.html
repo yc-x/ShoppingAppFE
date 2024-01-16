@@ -1,1 +1,21 @@
-<p>order-detail works!</p>
+<h1>Order Detail</h1>
+<p>{{orderService.oneOrder.id}}</p>
+<p>Order Time: {{orderService.oneOrder.datePlaced | date: 'medium'}}</p>
+<table>
+    <tr>
+        <th>Product Name</th>
+        <th>Qunatity</th>
+        <th>Purchased Price</th>
+        <th *ngIf="isAdmin()">Wholesale Price</th>
+    </tr>
+    <tr *ngFor="let oi of orderService.oneOrder.orderItemDetails">
+        <td>
+            <a href="" routerLink="/products/{{oi.productId}}">{{oi.productName}}</a>
+        </td>
+        <td>{{oi.quantity}}</td>
+        <td>{{oi.purchasedPrice | currency}}</td>
+        <td *ngIf="isAdmin()">{{oi.wholesalePrice | currency}}</td>
+
+    </tr>
+</table>
+<p>Order Status: {{orderService.oneOrder.status}}</p>

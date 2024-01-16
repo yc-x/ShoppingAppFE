@@ -1,0 +1,7 @@
+<h1>Shopping Cart</h1>
+<app-product-brief *ngFor="let product of productService.cart" 
+[product]="product" 
+[isInWatchlist]="false"
+[isInCart]="true"></app-product-brief>
+
+<button (click)="placeOrder()" [disabled]="productService.cart.length == 0">Place Order</button>

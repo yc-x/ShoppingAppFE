@@ -8,6 +8,7 @@ import {
 import { UserService } from '../services/user.service';
 import { User } from '../interfaces/user';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,57 +16,29 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  private userSubscription!: Subscription;
-  private userListSubscription!: Subscription;
-  public users: User[] = [];
 
-  constructor(private userService: UserService) {
 
+  constructor(private userService: UserService, 
+    private router: Router) {
   }
 
   ngOnInit() {
-    // this.userSubscription = this.userService.getUserListObs().subscribe(
-    //   (list) =>{
-    //     this.users = list;      
-    //   }
-    // );
-    this.userListSubscription = this.userService.getUserListObs().subscribe({
-      next: (newUserList) =>{
-        this.users = newUserList;
-      },
-      error: (error) =>{
-        console.log(error);
-      }
-    });
-
-    // this.userSubscription = this.userService.getUserObs().subscribe({
-    //   next: (newUser) =>{
-    //     this.users = this.userService.users;
-    //     // this.users.push(newUser);
-    //   },
-    //   error: (error) =>{
-    //     console.log(error);
-    //   }
-    // });
-    // console.log(this.userSubscription);
   }
 
-  formGroup = new FormBuilder().group({
+  loginformGroup = new FormBuilder().group({
     username: ['', Validators.required],
-    // email: ['', Validators.compose([Validators.email, Validators.required])],
     password: ['', Validators.required],
   });
 
-  getUsers(){
-    
+  onSubmit(){
+    this.userService.loginUser(this.loginformGroup.getRawValue() as User);
+  }
+
+  isUserLoggedIn(): boolean {
+    // Check if the user is logged in based on the presence of a token in localStorage
+    return !!localStorage.getItem('Bearer Token');
   }
 
   ngOnDestroy(){
-    if(this.userSubscription){
-      this.userSubscription.unsubscribe();
-    }
-    if(this.userListSubscription){
-      this.userListSubscription.unsubscribe();
-    }
   }
 }

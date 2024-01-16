@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -14,6 +14,17 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { ProductBriefComponent } from './product-brief/product-brief.component';
 import { OrderlistComponent } from './orderlist/orderlist.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { MyHttpInterceptorInterceptor } from './services/my-http-interceptor.interceptor';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { WatchListComponent } from './watch-list/watch-list.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { UserFreqProductComponent } from './user-freq-product/user-freq-product.component';
+import { UserRecentProductComponent } from './user-recent-product/user-recent-product.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatButtonModule } from '@Angular/material/button';
+import { MatTableModule } from '@Angular/material/table';
+
 
 
 @NgModule({
@@ -27,14 +38,30 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
     ProductBriefComponent,
     OrderlistComponent,
     OrderDetailComponent,
+    ShoppingCartComponent,
+    WatchListComponent,
+    NavBarComponent,
+    UserFreqProductComponent,
+    UserRecentProductComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatButtonModule, // Include other Angular Material modules
+    MatTableModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MyHttpInterceptorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,18 @@
+<nav class="navbar">
+    <!-- <div class="navbar-brand">
+      <a href="" routerLink="/orders/all">Home</a>
+    </div> -->
+    <ul class="nav-links">
+      <ng-container *ngIf="!isUserLoggedIn() ; else logoutP">
+        <li><a href="" routerLink="/login">Login</a></li>
+        <li><a href="" routerLink="/signup">Signup</a></li>
+      </ng-container>
+      <ng-template #logoutP>
+        <li><button (click)="logOut()">Logout</button></li>
+      </ng-template>
+      <li><a href="" routerLink="/orders/all">Orders</a></li>
+      <li><a href="" routerLink="/products/all">Products</a></li>
+      <li *ngIf="!isAdmin()"><a href="" routerLink="/cart">Your Cart</a></li>
+      <li *ngIf="!isAdmin()"><a href="" routerLink="/watchlist">Watchlist</a></li>
+    </ul>
+</nav>

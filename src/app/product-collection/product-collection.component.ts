@@ -8,11 +8,12 @@ import { ProductService } from '../services/product.service';
   styleUrls: ['./product-collection.component.css']
 })
 export class ProductCollectionComponent implements OnInit, OnDestroy {
-  products!: Product[];
   constructor(public productService: ProductService){}
-
+  // products: Product[] = [];
+  displayedColumns: string[] = ['productCol'];
   ngOnInit(){
-    this.products = this.productService.data;
+    this.productService.getAllProducts();
+    this.productService.getWatchList();
   }
   
 

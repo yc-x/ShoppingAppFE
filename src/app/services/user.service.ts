@@ -2,18 +2,21 @@ import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
 import { BehaviorSubject, Observable, Subject, of, ReplaySubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { LoginResponse } from '../interfaces/login-response';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+     private router: Router) { }
 
-  users: User[] = [];
+  currentUser: LoginResponse | null = null;
 
   // Create a new Subject
-  private userSubject = new ReplaySubject<User>();
+  // private userSubject = new ReplaySubject<User>();
   private userListSubject = new Subject<User[]>();
 
   private fetchUsers(): void {
@@ -22,6 +25,39 @@ export class UserService {
         this.onNewList(this.mapToUserList(response.data));
       }
     });
+  }
+
+  public addUsers(data: User): void{
+    this.http.post('/api/auth/signup', data).subscribe();
+  }
+
+  
+
+  public loginUser(data: User): void{
+    
+    this.http.post<LoginResponse>('api/auth/login', data).subscribe(
+      (response: LoginResponse) => {
+        if(response.token){
+          localStorage.removeItem('Bearer Token');
+          localStorage.clear();
+          localStorage.setItem('Bearer Token', response.token);
+          // localStorage.setItem('UID', response.id);
+          console.log(response.permissions);
+          // Hard coded, due to limited roles.
+          if(response.permissions.includes('Admin')){
+            localStorage.setItem('Permissions', 'Admin');
+          }
+          else if(response.permissions.includes('Buyer')){
+            localStorage.setItem('Permissions', 'Buyer');
+          }
+          this.currentUser = null;
+          this.currentUser = response;
+          const redirectUrl = '/orders/all';
+          // Navigate to the desired route
+          this.router.navigate([redirectUrl]);
+        }
+      }
+    )
   }
 
   private mapToUserList(data: any[]): User[] {
@@ -34,17 +70,16 @@ export class UserService {
     return newData;
   }
 
-  public add(val: User): void{
-    this.users.push({...val});
-    // this.usersSubject.next([...this.users]);
-    this.onNewData(val);
-    this.onNewList([...this.users]);
-    console.log(val);
-  }
+  // public add(val: User): void{
+  //   this.users.push({...val});
+  //   // this.usersSubject.next([...this.users]);
+  //   // this.onNewData(val);
+  //   this.onNewList([...this.users]);
+  // }
 
-  getUserObs(): Observable<User> {
-    return this.userSubject.asObservable();
-  }
+  // getUserObs(): Observable<User> {
+  //   return this.userSubject.asObservable();
+  // }
 
   public getUserListObs(): Observable<User[]>{
     this.fetchUsers();
@@ -61,8 +96,8 @@ export class UserService {
   //   return this.subject.asObservable();
   // }
 
-  onNewData(val: User) {
-    // Next will describe the next emitted value in the Observable Stream
-    this.userSubject.next(val);
-  }
+  // onNewData(val: User) {
+  //   // Next will describe the next emitted value in the Observable Stream
+  //   this.userSubject.next(val);
+  // }
 }

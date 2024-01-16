@@ -1,14 +1,11 @@
-<table>
-    <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Password</th>
-    </tr>
-    <tr *ngFor="let user of this.users">
-        <td>{{user.username}}</td>
-        <td>{{user.email}}</td>
-        <td>{{user.password}}</td>
-    </tr>
-</table>
+<form [formGroup]="loginformGroup" (ngSubmit)="onSubmit()">
+    <h1>Login</h1>
+  
+    <input class="input" type="text" placeholder="Username" formControlName="username" />
+  
+    <input class="input" type="password" placeholder="Password" formControlName="password" />
+  
+    <button class="btn" type="submit" [disabled]="loginformGroup.invalid || isUserLoggedIn()">Login</button>
+</form>
 
 <a href="" routerLink="/signup">Go to Signup</a>

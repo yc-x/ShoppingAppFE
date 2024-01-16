@@ -1,8 +1,33 @@
-<h2>{{product.name}}</h2>
-<p>{{product.description}}</p>
-<!-- <p>{{product.wholesalePrice}}</p>
+<div [ngStyle]="{ 'border': '1px solid #000', 
+'margin': '10px', 
+'padding': '10px'
+}">
+    <a href="" routerLink="/products/{{product.id}}">{{product.name}}</a>
+    <!-- <p>{{product.description}}</p> -->
+    <p>Price: {{product.retailPrice | currency}}</p>
+    <p *ngIf="product.wholesalePrice">Wholesale Price: {{product.wholesalePrice | currency }}</p>
+    
+    <ng-container *ngIf="!isAdmin(); else adminBlock">
+        <ng-container *ngIf="!isInCart; else incart">
+            <button (click)="addToCart(product)">Add To Cart</button>
+        </ng-container>
+        
+        <ng-template #incart>
+            <p>Quantity: {{product.quantity}}</p>
+            <button (click)="removeFromCart(product)">Remove From Cart</button>
+        </ng-template>
+        
+        <ng-container *ngIf="!isInWatchlist; else inwatchlist">
+            <button (click)="addToWatchlistById(product.id)">Add To Watchlist</button>
+        </ng-container>
+        <ng-template #inwatchlist>
+            <button (click)="removeFromWatchlistById(product.id)">Remove From Watchlist</button>
+        </ng-template>
+    </ng-container>
+    
+    <ng-template #adminBlock>
+        <p>Quantity: {{product.quantity}}</p>
+        <a>Edit</a>
+    </ng-template>
 
-<p>{{product.retailPrice}}</p>
-<p>{{product.quantity}}</p> -->
-
-<a href="" routerLink="/product/{{product.id}}">View Product Details</a>
+</div>

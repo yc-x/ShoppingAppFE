@@ -2,94 +2,99 @@ import { Injectable } from '@angular/core';
 import { Order } from '../interfaces/order';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ProductService } from './product.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  data: Order[] = [];
+  orders: Order[] = [];
+  oneOrder: Order = {
+    id: 0,
+    datePlaced: '',
+    orderItemDetails: [],
+    status: ''
+  }; 
 
   private orderListSubject: BehaviorSubject<Order[]> = new BehaviorSubject<Order[]>([]);
   public orderList$: Observable<Order[]> = this.orderListSubject.asObservable();
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, 
+    private productService: ProductService) { }
+
+  placeOrder(){
+    const orderList = this.productService.cart.map(item => ({
+      productId: item.id,
+      quantity: item.quantity
+    }));
+    const requestData = {
+      order: orderList
+    };
+    this.http.post('/api/content/orders', requestData).subscribe(
+      (response: any) => {
+        if(response.success){
+          this.productService.clearCart();
+        }
+        alert(response.message);
+      }
+    );
+  }
+
   fetchOrders(): void {
     //TODO: replace with real fetch.
     // this.http.get<any[]>(this.apiUrl).pipe(
     //   map(response => response.success && response.data ? this.mapToOrderList(response.data) : [])
     // )
-    this.orderListSubject.next( [
-      {
-        orderId: 1,
-        datePlaced: "2024-01-08T12:30:00.000+00:00",
-        orderItemDetails: [
-          {
-            purchasedPrice: 9.99,
-            quantity: 5,
-            wholesalePrice: 5.0,
-            productName: "Premium Coffee Beans",
-          },
-          {
-            purchasedPrice: 15.5,
-            quantity: 3,
-            wholesalePrice: 10.0,
-            productName: "French Press",
-          },
-        ],
-        status: "Processing",
-      },
-      {
-        orderId: 2,
-        datePlaced: "2024-01-09T10:45:00.000+00:00",
-        orderItemDetails: [
-          {
-            purchasedPrice: 22.99,
-            quantity: 2,
-            wholesalePrice: 18.0,
-            productName: "Wireless Bluetooth Earbuds",
-          },
-          {
-            purchasedPrice: 30.0,
-            quantity: 1,
-            wholesalePrice: 25.0,
-            productName: "Portable Power Bank",
-          },
-        ],
-        status: "Completed",
-      },
-      {
-        orderId: 3,
-        datePlaced: "2024-01-10T15:20:00.000+00:00",
-        orderItemDetails: [
-          {
-            purchasedPrice: 14.99,
-            quantity: 4,
-            wholesalePrice: 10.0,
-            productName: "Organic Green Tea",
-          },
-          {
-            purchasedPrice: 8.0,
-            quantity: 8,
-            wholesalePrice: 5.0,
-            productName: "Ceramic Teapot",
-          },
-        ],
-        status: "Canceled",
-      },
-    ]);
+    this.http.get('/api/content/orders/all').subscribe(
+      (response: any) => {
+        if(response.success && response.data){
+          this.orders = this.mapToOrderList(response.data);
+        } 
+      }
+    );
+  }
+
+  getOrderById(id: number): void{
+    this.http.get(`/api/content/orders/${id}`).subscribe(
+      (response: any) => {
+        if(response.success && response.data){
+          this.oneOrder = response.data;
+        } 
+      }
+    );
+  }
+
+  cancelOrderById(id: number): void{
+    this.http.patch(`/api/content/orders/${id}/cancel`, null).subscribe(
+      (response: any) => {
+        if(!response.success){
+          alert(response.message);
+        } 
+      }
+    );
+  }
+
+  completeOrderById(id: number): void{
+    this.http.patch(`/api/content/orders/${id}/complete`, null).subscribe(
+      (response: any) => {
+        if(!response.success){
+          alert(response.message);
+        } 
+      }
+    );
   }
 
   private mapToOrderList(data: any[]): Order[] {
     return data.map(item => ({
-      orderId: item.orderId,
+      id: item.orderId,
       datePlaced: item.datePlaced,
       orderItemDetails: item.orderItemDetails,
       status: item.status,
     }));
   }
 
-  add(p: Order){
-    this.data.push(p);
-  }
+  // add(p: Order){
+  //   this.orders.push(p);
+  // }
 
 }

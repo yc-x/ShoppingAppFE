@@ -12,20 +12,30 @@ export class ProductDetailComponent {
   // @Input() product!: Product;
 
   productId!: number;
-  product!: Product;
+  // isUpdate: boolean = false;
+  product: Product | null = null;
 
   constructor(private route: ActivatedRoute,
-    private productService: ProductService) {}
+    public productService: ProductService) {}
 
   ngOnInit() {
+    this.productService.getWatchList();
     this.route.params.subscribe(params => {
+      // this.isUpdate = false;
       this.productId = params['id'];
-      // You can use this.productId to fetch and display product details
-      const productObj = this.productService.data.find(p => p.id == this.productId)!;
-      //if(productObj){
-      this.product = productObj;
-      //}
 
     });
+
+    this.productService.getProductById(this.productId).subscribe(
+      (response: any) => {
+        if(response.success && response.data){
+          this.product = response.data;
+        }
+      }
+    );
+  }
+
+  addToCart(p: Product){
+    this.productService.addToCart(p);
   }
 }

@@ -1,6 +1,16 @@
-<h2>{{product.name}}</h2>
-<p>{{product.description}}</p>
-<p>{{product.wholesalePrice}}</p>
+<ng-container *ngIf="product !== null; else noData" >
+    <h2>{{product.name}}</h2>
+    <p>{{product.description}}</p>
+    <p>{{product.wholesalePrice | currency}}</p>
+    <p>Sell Price: {{product.retailPrice | currency}}</p>
+    <p>{{product.quantity}}</p>
 
-<p>{{product.retailPrice}}</p>
-<p>{{product.quantity}}</p>
+    <button (click)="addToCart(product)">Add To Cart</button>
+    
+</ng-container>
+<ng-template #noData>
+    <!-- Content to be displayed when myComponentProperty is null -->
+    <p>Loading...</p>
+</ng-template>
+<br>
+<a href="" routerLink="/products/all">Back to All Products</a>

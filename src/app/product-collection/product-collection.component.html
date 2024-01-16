@@ -1,1 +1,18 @@
-<app-product-brief *ngFor="let product of products" [product]="product"></app-product-brief>
+<h1>Product List</h1>
+
+<!-- <app-product-brief *ngFor="let product of productService.products" 
+[product]="product" 
+[isInWatchlist]="productService.isInWatchlist(product)"
+[isInCart]="false"></app-product-brief> -->
+
+<mat-table [dataSource]="productService.products">
+    <ng-container matColumnDef="productCol">
+      <!-- <mat-header-cell *matHeaderCellDef> Custom Module </mat-header-cell> -->
+      <mat-cell *matCellDef="let product">
+        <app-product-brief [product]="product" [isInWatchlist]="productService.isInWatchlist(product)" [isInCart]="false">
+        </app-product-brief>
+      </mat-cell>
+    </ng-container>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+  
