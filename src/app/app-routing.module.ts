@@ -10,17 +10,23 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { WatchListComponent } from './watch-list/watch-list.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { EditProductComponent } from './edit-product/edit-product.component';
+import { AddProductComponent } from './add-product/add-product.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'products/all', component: ProductCollectionComponent, canActivate: [AuthGuardService]},
+  { path: 'products/add', component:AddProductComponent, canActivate: [AuthGuardService]},
   { path: 'products/:id', component: ProductDetailComponent, canActivate: [AuthGuardService]},
+  { path: 'products/:id/edit', component: EditProductComponent, canActivate: [AuthGuardService]},
+
   { path: 'cart', component: ShoppingCartComponent, canActivate: [AuthGuardService]},
   { path: 'orders/all', component: OrderlistComponent, canActivate: [AuthGuardService]},
   { path: 'orders/:id', component: OrderDetailComponent, canActivate: [AuthGuardService]},
   { path: 'watchlist', component: WatchListComponent, canActivate: [AuthGuardService]},
+
   { path: '**', component: NotfoundComponent }
 ];
 

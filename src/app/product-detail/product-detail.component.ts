@@ -38,4 +38,8 @@ export class ProductDetailComponent {
   addToCart(p: Product){
     this.productService.addToCart(p);
   }
+
+  isAdmin(): boolean{
+    return localStorage.getItem('Permissions') == 'Admin';
+  }
 }

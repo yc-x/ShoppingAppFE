@@ -24,10 +24,11 @@
             <button (click)="removeFromWatchlistById(product.id)">Remove From Watchlist</button>
         </ng-template>
     </ng-container>
-    
+
     <ng-template #adminBlock>
         <p>Quantity: {{product.quantity}}</p>
-        <a>Edit</a>
+        
+        <a href="" routerLink="/products/{{product.id}}/edit" >Edit</a>
     </ng-template>
 
 </div>

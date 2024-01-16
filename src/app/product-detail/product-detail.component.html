@@ -5,7 +5,7 @@
     <p>Sell Price: {{product.retailPrice | currency}}</p>
     <p>{{product.quantity}}</p>
 
-    <button (click)="addToCart(product)">Add To Cart</button>
+    <button *ngIf="!isAdmin()" (click)="addToCart(product)">Add To Cart</button>
     
 </ng-container>
 <ng-template #noData>

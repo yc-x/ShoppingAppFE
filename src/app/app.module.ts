@@ -20,10 +20,15 @@ import { WatchListComponent } from './watch-list/watch-list.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { UserFreqProductComponent } from './user-freq-product/user-freq-product.component';
 import { UserRecentProductComponent } from './user-recent-product/user-recent-product.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatButtonModule } from '@Angular/material/button';
-import { MatTableModule } from '@Angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { AddProductComponent } from './add-product/add-product.component';
+
 
 
 
@@ -43,6 +48,8 @@ import { MatTableModule } from '@Angular/material/table';
     NavBarComponent,
     UserFreqProductComponent,
     UserRecentProductComponent,
+    EditProductComponent,
+    AddProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +61,8 @@ import { MatTableModule } from '@Angular/material/table';
     BrowserAnimationsModule,
     MatButtonModule, // Include other Angular Material modules
     MatTableModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   providers: [
     {

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Product } from '../interfaces/product';
+// import { Product } from '../interfaces/product';
 import { ProductService } from '../services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-collection',
@@ -8,7 +9,8 @@ import { ProductService } from '../services/product.service';
   styleUrls: ['./product-collection.component.css']
 })
 export class ProductCollectionComponent implements OnInit, OnDestroy {
-  constructor(public productService: ProductService){}
+  constructor(public productService: ProductService, 
+    private router: Router){}
   // products: Product[] = [];
   displayedColumns: string[] = ['productCol'];
   ngOnInit(){
@@ -16,6 +18,14 @@ export class ProductCollectionComponent implements OnInit, OnDestroy {
     this.productService.getWatchList();
   }
   
+  isAdmin(): boolean{
+    return localStorage.getItem('Permissions') == 'Admin';
+  }
 
   ngOnDestroy(): void {}
+
+  redirectToAddProduct(){
+    this.router.navigate(['/products/add']);
+    console.log("here");
+  }
 }

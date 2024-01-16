@@ -2,16 +2,19 @@ import { Injectable } from '@angular/core';
 import { Product } from '../interfaces/product';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, 
+    private router: Router) {}
 
   products: Product[] = [];
   oneProduct!: Product;
+  editProduct!: Product;
   cart: Product[] = [];
   watchlist: Product[] = [];
   userFrequentProducts: Product[] = [];
@@ -158,6 +161,32 @@ export class ProductService {
         if(response.success && response.data){
           this.profitableProducts = response.data;
           this.adminFrequentProducts = [];
+        }
+      }
+    );
+  }
+
+  updateProduct(p: Product){
+    this.http.patch(`/api/content/products/${p.id}`, p).subscribe(
+      (response: any) => {
+        if(!response.success){
+          alert(response.message);
+        }
+        else{
+          const redirectUrl = '/products/all';
+          this.router.navigate([redirectUrl]);
+        }
+      }
+    );
+  }
+
+  addProduct(p: Product){
+    this.http.post(`/api/content/products`, p).subscribe(
+      (response: any) => {
+        alert(response.message);
+        if(response.success){
+          const redirectUrl = '/products/all';
+          this.router.navigate([redirectUrl]);
         }
       }
     );
