@@ -14,20 +14,19 @@
         
         <ng-template #incart>
             <p>Quantity: {{product.quantity}}</p>
-            <button (click)="removeFromCart(product)">Remove From Cart</button>
+            <button  (click)="removeFromCart(product)">Remove From Cart</button>
         </ng-template>
         
         <ng-container *ngIf="!isInWatchlist; else inwatchlist">
-            <button (click)="addToWatchlistById(product.id)">Add To Watchlist</button>
+            <button  (click)="addToWatchlistById(product.id)">Add To Watchlist</button>
         </ng-container>
         <ng-template #inwatchlist>
-            <button (click)="removeFromWatchlistById(product.id)">Remove From Watchlist</button>
+            <button  (click)="removeFromWatchlistById(product.id)">Remove From Watchlist</button>
         </ng-template>
     </ng-container>
 
     <ng-template #adminBlock>
         <p>Quantity: {{product.quantity}}</p>
-        
         <a href="" routerLink="/products/{{product.id}}/edit" >Edit</a>
     </ng-template>
 

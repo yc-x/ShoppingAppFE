@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class OrderDetailComponent implements OnInit{
   @Input() orderId!: number;
+  displayedColumns: string[] = [];
 
   constructor(private route: ActivatedRoute, 
     public orderService: OrderService){}
@@ -19,6 +20,12 @@ export class OrderDetailComponent implements OnInit{
       this.orderId = params['id'];
       this.orderService.getOrderById(this.orderId);
     });
+    if(this.isAdmin()){
+      this.displayedColumns = ['name', 'quantity', 'purchasedPrice', 'wholesalePrice'];
+    }
+    else{
+      this.displayedColumns = ['name', 'quantity', 'purchasedPrice'];
+    }
   }
 
   isAdmin(){

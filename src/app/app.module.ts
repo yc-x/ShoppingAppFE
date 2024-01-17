@@ -28,6 +28,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddProductComponent } from './add-product/add-product.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import {MatCardModule} from '@angular/material/card';
 
 
 
@@ -62,7 +65,10 @@ import { AddProductComponent } from './add-product/add-product.component';
     MatButtonModule, // Include other Angular Material modules
     MatTableModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    MatCardModule
   ],
   providers: [
     {

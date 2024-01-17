@@ -1,7 +1,7 @@
 <h1>Order Detail</h1>
 <p>{{orderService.oneOrder.id}}</p>
 <p>Order Time: {{orderService.oneOrder.datePlaced | date: 'medium'}}</p>
-<table>
+<!-- <table>
     <tr>
         <th>Product Name</th>
         <th>Qunatity</th>
@@ -17,5 +17,27 @@
         <td *ngIf="isAdmin()">{{oi.wholesalePrice | currency}}</td>
 
     </tr>
+</table> -->
+<table mat-table [dataSource]="this.orderService.oneOrder.orderItemDetails">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Product Name</th>
+        <td mat-cell *matCellDef="let orderItem;">
+            <a href="" routerLink="/products/{{orderItem.productId}}">{{orderItem.productName}}</a>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <td mat-cell *matCellDef="let orderItem;">{{orderItem.quantity}}</td>
+    </ng-container>
+    <ng-container matColumnDef="purchasedPrice">
+        <th mat-header-cell *matHeaderCellDef>Price</th>
+        <td mat-cell *matCellDef="let orderItem;">{{orderItem.purchasedPrice | currency}}</td>
+    </ng-container>
+    <ng-container matColumnDef="wholesalePrice" >
+        <th mat-header-cell *matHeaderCellDef>Wholesale Price</th>
+        <td mat-cell *matCellDef="let orderItem;">{{orderItem.wholesalePrice | currency}}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <p>Order Status: {{orderService.oneOrder.status}}</p>

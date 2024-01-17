@@ -3,3 +3,21 @@
     max-width: 600px;
     margin: 5px;
 }
+
+
+.order-table {
+    width: 100%;
+    margin-top: 20px; /* Adjust as needed */
+}
+  
+  /* Custom styling for the table header cells */
+.order-table th.mat-header-cell {
+    background-color: #eee;
+    color: #111;
+}
+  
+  /* Custom styling for the table data cells */
+.order-table td.mat-cell {
+    border: 1px solid #bbb;
+}
+  
