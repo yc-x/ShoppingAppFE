@@ -13,9 +13,11 @@ export class ProductCollectionComponent implements OnInit, OnDestroy {
     private router: Router){}
   // products: Product[] = [];
   displayedColumns: string[] = ['productCol'];
+  isDisplay: boolean = false;
   ngOnInit(){
     this.productService.getAllProducts();
     this.productService.getWatchList();
+    // this.productService.getTotalProductsSold();
   }
   
   isAdmin(): boolean{
@@ -26,6 +28,12 @@ export class ProductCollectionComponent implements OnInit, OnDestroy {
 
   redirectToAddProduct(){
     this.router.navigate(['/products/add']);
-    console.log("here");
   }
+  getTotalProductsSold(){
+    this.productService.getTotalProductsSold();
+    this.isDisplay = true;
+    // console.log(this.productService.adminTotalProductsSold);
+  }
+
+  
 }

@@ -42,8 +42,8 @@ export class UserService {
           localStorage.clear();
           localStorage.setItem('Bearer Token', response.token);
           // localStorage.setItem('UID', response.id);
-          console.log(response.permissions);
-          // Hard coded, due to limited roles.
+          // console.log(response.permissions);
+          // Hard coded, due to limited roles. Need to fix that.
           if(response.permissions.includes('Admin')){
             localStorage.setItem('Permissions', 'Admin');
           }
@@ -52,8 +52,8 @@ export class UserService {
           }
           this.currentUser = null;
           this.currentUser = response;
+
           const redirectUrl = '/orders/all';
-          // Navigate to the desired route
           this.router.navigate([redirectUrl]);
         }
       }

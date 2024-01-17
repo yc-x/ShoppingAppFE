@@ -5,4 +5,5 @@ export interface Product{
     retailPrice: number;
     quantity: number;
     wholesalePrice: number;
+    soldQuantity: number;
 }

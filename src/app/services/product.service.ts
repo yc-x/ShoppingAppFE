@@ -21,6 +21,7 @@ export class ProductService {
   userRecentProducts: Product[] = [];
   adminFrequentProducts: Product[] = [];
   profitableProducts: Product[] = [];
+  adminTotalProductsSold: Product[] = [];
 
 
   watchlistSubject: BehaviorSubject<Product[]> = 
@@ -45,7 +46,8 @@ export class ProductService {
         description: p.description,
         wholesalePrice: p.wholesalePrice,
         quantity: 1,
-        retailPrice: p.retailPrice
+        retailPrice: p.retailPrice,
+        soldQuantity: 0,
       };
       this.cart.push(newP);
     }
@@ -161,6 +163,22 @@ export class ProductService {
         if(response.success && response.data){
           this.profitableProducts = response.data;
           this.adminFrequentProducts = [];
+        }
+      }
+    );
+  }
+
+  getTotalProductsSold(){
+    // this.adminFrequentProducts = [];
+    this.http.get(`/api/content/products/sold`).subscribe(
+      (response: any) =>{
+        if(response.success){
+          if(response.data){
+            this.adminTotalProductsSold = response.data;
+          }
+        }
+        else{
+          alert(response.message);
         }
       }
     );

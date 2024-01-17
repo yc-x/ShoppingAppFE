@@ -18,6 +18,19 @@
 <br />
 <ng-container *ngIf="isAdmin()">
   <button mat-flat-button color="primary" (click)="redirectToAddProduct()">Add Product</button>
+  <button mat-flat-button color="primary" (click)="getTotalProductsSold()">Get Total Products sold</button>
+  <ng-container *ngIf="isDisplay && productService.adminTotalProductsSold.length > 0">
+    <table>
+      <tr>
+        <th>Product Name</th>
+        <th>Sold Quantity</th>
+      </tr>
+      <tr *ngFor="let product of productService.adminTotalProductsSold">
+        <td>{{product.name}}</td>
+        <td>{{product.soldQuantity | number}}</td>
+      </tr>
+    </table>
+  </ng-container>
 </ng-container>
 
   

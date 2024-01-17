@@ -13,9 +13,11 @@
       <mat-card-subtitle>{{ product.description }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <p>{{product.wholesalePrice | currency}}</p>
+      
         <p>Sell Price: {{product.retailPrice | currency}}</p>
-        <p>{{product.quantity}}</p>
+        <p *ngIf="isAdmin()">WholesalePrice: {{product.wholesalePrice | currency}}</p>
+        <p *ngIf="isAdmin()">Quantity in Stock: {{product.quantity}}</p>
+
         <button mat-raised-button *ngIf="!isAdmin()" (click)="addToCart(product)">Add To Cart</button>
         <button mat-raised-button *ngIf="!isAdmin() && !isInWatchlist" (click)="addToWatchlist(product)">Add To Watchlist</button>
         <button mat-raised-button *ngIf="!isAdmin() && isInWatchlist" (click)="removeFromWatchlist(product)">Remove From Watchlist</button>
