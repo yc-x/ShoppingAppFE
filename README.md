@@ -1,3 +1,6 @@
+# Before Everything
+My code is utilizing a backend api developed using spring, gonna update the reference upon I fix my api.
+
 # ShoppingApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.11.
