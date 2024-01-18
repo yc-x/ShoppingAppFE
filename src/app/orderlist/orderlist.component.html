@@ -27,9 +27,9 @@
         <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let order">
-            <button (click)="cancelOrder(order.id)" [disabled]="order.status !== 'Processing'">Cancel</button>
-            <br />
-            <button *ngIf="isAdmin()" (click)="completeOrder(order.id)" [disabled]="order.status !== 'Processing'">Complete</button>
+            <button  mat-flat-button (click)="cancelOrder(order.id)" [disabled]="order.status !== 'Processing'">Cancel</button>
+            <!-- <br /> -->
+            <button mat-flat-button *ngIf="isAdmin()" (click)="completeOrder(order.id)" [disabled]="order.status !== 'Processing'">Complete</button>
         </td>
         </ng-container>
         <!-- Define the row -->
